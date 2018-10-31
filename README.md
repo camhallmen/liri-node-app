@@ -24,6 +24,6 @@ LIRI Command | Command Value
 
 **LIRI Commands can be issued through the terminal after downloading the proper node packages**
 
-Simply type "node liri.js" (without the quotes) follwed by a command such as "movie-this" (again, no quotes) and lastly, whatever it is you're searching for such as "Inception" this time keeping the quotes.
+Simply type "node liri.js" (without the quotes) follwed by a command such as "movie-this" (again, no quotes) and lastly, whatever it is you're searching for such as "Inception", this time keeping the quotes.
 
 **node liri.js movie-this "Inception"**

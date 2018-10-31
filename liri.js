@@ -12,11 +12,11 @@ var spotify = new SPOTIFY(keys.spotify);
 
 function spotifyThis(spotifyInput) {
     // Default to The Sign
-    if (spotifyInput === " ") {
+    if (!spotifyInput) {
         spotifyInput = "The Sign"
     }
     // Otherwise, perform the search
-    spotify.search({ type: 'track', query: spotifyInput, limit: 3 }, function (err, data) {
+    spotify.search({ type: 'track', query: spotifyInput, limit: 1 }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
@@ -49,13 +49,17 @@ switch (action) {
 }
 
 // OMDB request 
+
 function movieThis(movieInput) {
+    var movies = keys.movies.apikey
     // Default to Mr. Nobody if no input
-    if (movieInput === " ") {
+    var movieURL = "http://www.omdbapi.com/?t=" + movieInput + "&y=&plot=short&apikey=" + movies
+    if (!movieInput) {
         movieInput = "Mr. Nobody"
     }
-    request("http://www.omdbapi.com/?t=" + movieInput + "&y=&plot=short&apikey=trilogy", function (error, response, body) {
-        if (!error && response.statusCode === 200) {
+    request("http://www.omdbapi.com/?t=" + movieInput + "&y=&plot=short&apikey=" + movies, function (error, response, body) {
+        console.log(response.statusCode)
+        if (!error) {
 
             // Say hello to my little friend(s)
             console.log("\n-----------------------------------------------")
@@ -75,8 +79,8 @@ function movieThis(movieInput) {
 // Bands In Town request
 function concertThis(concertInput) {
     var moment = require("moment")
-
-    request("https://rest.bandsintown.com/artists/" + concertInput + "/events?app_id=codingbootcamp", function (error, response, body) {
+    var concertID = keys.concertID.app_id
+    request("https://rest.bandsintown.com/artists/" + concertInput + "/events?app_id=" + concertID, function (error, response, body) {
         if (!error && response.statusCode === 200) {
             // Saved concert date as a variable to clean up final line
             var concertDate = JSON.parse(body)[0].datetime
@@ -92,5 +96,40 @@ function concertThis(concertInput) {
     })
 }
 
+// FS command
+// var fs = require("fs-extra")
+// var file = "random.txt"
 
 
+// function doThis() {
+//     fs.readFile(file)
+//         .then(process.argv[2] = file)
+//         .then(file)
+//     console.log(file)
+// }
+
+// if (process.argv[2] === "do-what-it-says") {
+//         fs.readFile(file)
+//         console.log(file)
+//             .then(process.argv[2] = file)
+//         console.log(file)
+// }
+// // With a callback:
+// fs.outputFile(file, 'hello!', err => {
+//     console.log(err) // => null
+
+//     fs.readFile(file, 'utf8', (err, data) => {
+//       if (err) return console.error(err)
+//       console.log(data) // => hello!
+//     })
+//   })
+
+//   // With Promises:
+//   fs.outputFile(file, 'hello!')
+//   .then(() => fs.readFile(file, 'utf8'))
+//   .then(data => {
+//     console.log(data) // => hello!
+//   })
+//   .catch(err => {
+//     console.error(err)
+//   })
